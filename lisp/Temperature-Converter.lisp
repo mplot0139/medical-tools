@@ -8,6 +8,11 @@
 (defconstant *abs-zero-fahr* -459.67)
 (defconstant *abs-zero-cels* -273.15)
 
+;;; round/floor/ceil/trunk to a certain precision
+(defun round-to (number precision &optional (fn #'round))
+	(let ((div (expt 10 precision)))
+		(/ (funcall fn (* number div)) div 1.0)))
+
 ;;; checks if the temperature is above absolute zero
 ;;; takes a temperature as a number and units as symbol
 ;;; returns true or nil
@@ -29,18 +34,6 @@
 		(>= precision 0)
 		(round-to (* 5/9 (- temp 32)) precision)))
 
-;;; converts a list or vector of F values to a vector or list (default) of C values
-;;; accepts optional precision (integer) with default of 2 and result type - 
-;;; list (default) or vector
-(defun fahrenheit-to-celsius-seq (temp &optional (precision 2) (res-type 'list))
-	)
-
-;;; converts a list or vector of C values to a vector or list (default) of F values
-;;; accepts optional precision (integer) with default of 2 and 
-;;; result type - list (default) or vector
-(defun celsius-to-fahrenheit-seq (temp &optional (precision 2) (res-type 'list))
-	)
-
 ;;; converts single value C to F
 (defun celsius-to-fahrenheit (temp &optional (precision 2))
 	(and (temp-in-range-p temp 'c)
@@ -48,11 +41,24 @@
 		(>= precision 0)
 		(round-to (+ 32 (* 1.8 temp)) precision)))
 
+;;; converts a list or vector of F values to a vector or list (default) of C values
+;;; accepts  &key precision (integer) with default of 2 and result type - 
+;;; list (default) or vector
+(defun fahrenheit-to-celsius-seq (temp-seq &key (precision 2) (res-type 'list))
+	(if (or (eq res-type 'list) (eq res-type 'vector))
+		(map res-type #'fahrenheit-to-celsius temp-seq)))
 
-;;; round/floor/ceil/trunk to a certain precision
-(defun round-to (number precision &optional (fn #'round))
-	(let ((div (expt 10 precision)))
-		(/ (funcall fn (* number div)) div 1.0)))
+;;; converts a list or vector of C values to a vector or list (default) of F values
+;;; accepts &key precision (integer) with default of 2 and 
+;;; result type - list (default) or vector
+(defun celsius-to-fahrenheit-seq (temp-seq &key (precision 2) (res-type 'list))
+	(if (or (eq res-type 'list) (eq res-type 'vector))
+		(map res-type #'celsius-to-fahrenheit temp-seq)))
+
+;;; tests for seq functions
+(print (fahrenheit-to-celsius-seq '(10 20 30 40 98.6)))
+(print (fahrenheit-to-celsius-seq '(10 20 30 40 98.6) :precision 3))
+(print (fahrenheit-to-celsius-seq '(10 20 30 40 98.6) :res-type'vector))
 
 ;;; tests for temp-in-range-p
 ; (print (temp-in-range-p -459.67 'f))
@@ -67,27 +73,27 @@
 ; (print (temp-in-range-p 459.67 'c))
 
 ;; tests for celsius-to-fahrenheit
-(print (= (celsius-to-fahrenheit 0) 32))
-(print (= (celsius-to-fahrenheit 10) 50))
-(print (= (celsius-to-fahrenheit -10) 14))
-(print (= (celsius-to-fahrenheit -273.15) -459.67))
-(print (equal (celsius-to-fahrenheit -300) nil))
-(print (equal (celsius-to-fahrenheit 10 3.4) nil))
-(print (equal (celsius-to-fahrenheit 10 -3) nil))
-(print (= (celsius-to-fahrenheit 0 3) 32))
-(print (celsius-to-fahrenheit 0 3))
+; (print (= (celsius-to-fahrenheit 0) 32))
+; (print (= (celsius-to-fahrenheit 10) 50))
+; (print (= (celsius-to-fahrenheit -10) 14))
+; (print (= (celsius-to-fahrenheit -273.15) -459.67))
+; (print (equal (celsius-to-fahrenheit -300) nil))
+; (print (equal (celsius-to-fahrenheit 10 3.4) nil))
+; (print (equal (celsius-to-fahrenheit 10 -3) nil))
+; (print (= (celsius-to-fahrenheit 0 3) 32))
+; (print (celsius-to-fahrenheit 0 3))
 
 
-;;; tests for fahr-to-cels
-(print (= (fahrenheit-to-celsius 32) 0))
-(print (= (fahrenheit-to-celsius 50) 10))
-(print (= (fahrenheit-to-celsius 14) -10))
-(print (= (fahrenheit-to-celsius -459.67) -273.15))
-(print (equal (fahrenheit-to-celsius -500) nil))
-(print (equal (fahrenheit-to-celsius 10 3.4) nil))
-(print (equal (fahrenheit-to-celsius 10 -3) nil))
-(print (= (fahrenheit-to-celsius 32 3) 0))
-(print (fahrenheit-to-celsius 0 3))
+; ;;; tests for fahr-to-cels
+; (print (= (fahrenheit-to-celsius 32) 0))
+; (print (= (fahrenheit-to-celsius 50) 10))
+; (print (= (fahrenheit-to-celsius 14) -10))
+; (print (= (fahrenheit-to-celsius -459.67) -273.15))
+; (print (equal (fahrenheit-to-celsius -500) nil))
+; (print (equal (fahrenheit-to-celsius 10 3.4) nil))
+; (print (equal (fahrenheit-to-celsius 10 -3) nil))
+; (print (= (fahrenheit-to-celsius 32 3) 0))
+; (print (fahrenheit-to-celsius 0 3))
 
 
 
