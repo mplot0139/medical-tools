@@ -80,6 +80,12 @@
 		(t nil)))
 	(t nil)))
 
+;;; tests for fahrenheit-celsius
+(print (fahrenheit-celsius 98))
+(print (fahrenheit-celsius 37.2 :from 'C))
+(print (fahrenheit-celsius 98 :precision 3))
+(print (fahrenheit-celsius 37.23 :from 'C :precision 3))
+
 ; ;;; tests for seq functions
 ; (print (celsius-to-fahrenheit-seq '(10 20 30 40 98.6)))
 ; (print (celsius-to-fahrenheit-seq '(10 20 30 40 98.6) :precision 3))
