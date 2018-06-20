@@ -44,21 +44,27 @@
 ;;; converts a list or vector of F values to a vector or list (default) of C values
 ;;; accepts  &key precision (integer) with default of 2 and result type - 
 ;;; list (default) or vector
-(defun fahrenheit-to-celsius-seq (temp-seq &key (precision 2) (res-type 'list))
-	(if (or (eq res-type 'list) (eq res-type 'vector))
-		(dolist ())))
+(defun fahrenheit-to-celsius-seq (temp-seq &key (precision 2) (result-type 'list))
+	(map result-type #'(lambda (x) (fahrenheit-to-celsius x precision)) temp-seq))
 
 ;;; converts a list or vector of C values to a vector or list (default) of F values
 ;;; accepts &key precision (integer) with default of 2 and 
 ;;; result type - list (default) or vector
-(defun celsius-to-fahrenheit-seq (temp-seq &key (precision 2) (res-type 'list))
-	(if (or (eq res-type 'list) (eq res-type 'vector))
-		(map res-type #'celsius-to-fahrenheit temp-seq)))
+(defun celsius-to-fahrenheit-seq (temp-seq &key (precision 2) (result-type 'list))
+	(map result-type #'(lambda (x) (celsius-to-fahrenheit x precision)) temp-seq))
 
-;;; tests for seq functions
-(print (fahrenheit-to-celsius-seq '(10 20 30 40 98.6)))
-(print (fahrenheit-to-celsius-seq '(10 20 30 40 98.6) :precision 3))
-(print (fahrenheit-to-celsius-seq '(10 20 30 40 98.6) :res-type'vector))
+; ;;; tests for seq functions
+; (print (celsius-to-fahrenheit-seq '(10 20 30 40 98.6)))
+; (print (celsius-to-fahrenheit-seq '(10 20 30 40 98.6) :precision 3))
+; (print (celsius-to-fahrenheit-seq '(10 20 30 40 98.6) :result-type 'vector))
+; (print (celsius-to-fahrenheit-seq #(10 20 30 40 98.6) :precision 3))
+; (print (celsius-to-fahrenheit-seq #(10 20 30 40 98.6) :result-type 'vector))
+
+; (print (fahrenheit-to-celsius-seq '(10 20 30 40 98.6)))
+; (print (fahrenheit-to-celsius-seq '(10 20 30 40 98.6) :precision 3))
+; (print (fahrenheit-to-celsius-seq '(10 20 30 40 98.6) :result-type 'vector))
+; (print (fahrenheit-to-celsius-seq #(10 20 30 40 98.6) :precision 3))
+; (print (fahrenheit-to-celsius-seq #(10 20 30 40 98.6) :result-type 'vector))
 
 ;;; tests for temp-in-range-p
 ; (print (temp-in-range-p -459.67 'f))
