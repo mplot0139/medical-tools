@@ -53,6 +53,33 @@
 (defun celsius-to-fahrenheit-seq (temp-seq &key (precision 2) (result-type 'list))
 	(map result-type #'(lambda (x) (celsius-to-fahrenheit x precision)) temp-seq))
 
+;;; combined F-to-C converter. 
+;;; Accepts:
+;;; 	single value, list, or vector of temperatures
+;;; 	&key sympbols 'F or 'C (defaults to 'F)
+;;; 	&key precision (defaults to 2)
+;;;		&key result-type (defaults to 'list for sequences)
+(defun fahrenheit-celsius (temp &key (from 'F) (precision 2) (result-type 'list))
+	(cond ((numberp temp)
+		(cond ((eq from 'F)
+			(fahrenheit-to-celsius temp precision))
+		((eq from 'C)
+			(celsius-to-fahrenheit temp precision))
+		(t nil)))
+	((or (listp temp) (vectorp temp))
+		(cond ((eq from 'F)
+			(fahrenheit-to-celsius-seq 
+				temp 
+				:precision precision 
+				:result-type result-type))
+		((eq from 'C) 
+			(celsius-to-fahrenheit-seq
+				temp
+				:precision precision
+				:result-type result-type))
+		(t nil)))
+	(t nil)))
+
 ; ;;; tests for seq functions
 ; (print (celsius-to-fahrenheit-seq '(10 20 30 40 98.6)))
 ; (print (celsius-to-fahrenheit-seq '(10 20 30 40 98.6) :precision 3))
