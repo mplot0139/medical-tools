@@ -38,7 +38,7 @@
 ;;; converts a list or vector of C values to a vector or list (default) of F values
 ;;; accepts optional precision (integer) with default of 2 and 
 ;;; result type - list (default) or vector
-(defun fahrenheit-to-celsius-seq (temp &optional (precision 2) (res-type 'list))
+(defun celsius-to-fahrenheit-seq (temp &optional (precision 2) (res-type 'list))
 	)
 
 ;;; converts single value C to F
