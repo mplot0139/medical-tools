@@ -46,7 +46,7 @@
 ;;; list (default) or vector
 (defun fahrenheit-to-celsius-seq (temp-seq &key (precision 2) (res-type 'list))
 	(if (or (eq res-type 'list) (eq res-type 'vector))
-		(map res-type #'fahrenheit-to-celsius temp-seq)))
+		(dolist ())))
 
 ;;; converts a list or vector of C values to a vector or list (default) of F values
 ;;; accepts &key precision (integer) with default of 2 and 
