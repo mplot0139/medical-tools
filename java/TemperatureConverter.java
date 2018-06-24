@@ -14,7 +14,7 @@ public class TemperatureConverter {
     final private static  double d_ABS_ZERO_CELS = -273.15;     // absolute zero in celsius
 
     // private methods
-    private double roundTo (double dTemp, int nPrecision = 2) {
+    public static double roundTo (double dTemp, int nPrecision = 2) {
         /**
          * rounds double to the specified precision
          *
@@ -30,29 +30,29 @@ public class TemperatureConverter {
     }
 
 
-    private boolean tempInRange (double dTemp, char chUnits = 'f') {}
+    private static boolean tempInRange (double dTemp, char chUnits = 'f') {}
 
     // public methods
-    public double getAbsZeroCels() {
+    public static double getAbsZeroCels() {
         return TemperatureConverter.d_ABS_ZERO_CELS;
     }
 
-    public double getAbsZeroFahr() {
+    public static double getAbsZeroFahr() {
         return TemperatureConverter.d_ABS_ZERO_FAHR;
     }
 
-    public double celsToFahr(double dTemp, int nPrecision = 2) {}
+    public static double celsToFahr(double dTemp, int nPrecision = 2) {}
 
-    public double[] celsToFahr(double[] dTemp, int nPrecision = 2) {}
+    public static double[] celsToFahr(double[] dTemp, int nPrecision = 2) {}
 
-    public double fahrToCels(double dTemp, int nPrecision = 2) {}
+    public static double fahrToCels(double dTemp, int nPrecision = 2) {}
 
-    public double[] fahrToCels(double[] dTemp, int nPrecision = 2) {}
+    public static double[] fahrToCels(double[] dTemp, int nPrecision = 2) {}
 
     // testing
-    public static void main() {
+    public static void main(String[] args) {
         double testNum = 245.34566;
-        System.out.println(roundTo(testNum))®;
+        System.out.println(TemperatureConverter.roundTo(testNum));
     }
 
 }
